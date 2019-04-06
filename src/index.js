@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Game from './Game'
+import './index.css'
 
-ReactDOM.render(<h1>welcome to solitaire</h1>, document.getElementById('root'));
+ReactDOM.render(<div><Game /></div>, document.getElementById('root'));
 

@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+}
+
+.deck {
+  display: flex
+}
+
+.card{
+  font-size: 150px;
+}
+
+.foundation{
+  display: flex
+}
+
+.stock{
+  display: flex
+}
