@@ -3,18 +3,37 @@ import { Cards, EmptyCard, Default } from "./cards_data/cards";
 import lodash from "lodash";
 import Foundation from "./foundation";
 import Tableau from "./tableau";
-import Deck from "./deck";
+import Deck from "./stock";
+import Stock from "./stock";
+import App from "./App";
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.deck = new Tableau();
-    this.deck.addCard(Default);
+    this.app = new App();
+    this.stock = new Stock();
+    this.stock.addCard(Default);
     this.waste = new Deck();
     this.waste.addCard(EmptyCard);
-    this.foundation = new Foundation();
-    this.foundation.addCard(EmptyCard);
-    this.state = { deck: this.deck, waste: this.waste };
+    this.state = { waste: this.waste };
+    this.setFoundations();
+    this.setTableaus();
+  }
+
+  setTableaus() {
+    for (let index = 0; index < 7; index++) {
+      let tableau = new Tableau();
+      tableau.addCard(Default);
+      this.app.addTableau(tableau);
+    }
+  }
+
+  setFoundations() {
+    for (let index = 0; index < 4; index++) {
+      let foundation = new Foundation();
+      foundation.addCard(EmptyCard);
+      this.app.addFoundation(foundation);
+    }
   }
 
   updateDeck() {
@@ -31,23 +50,18 @@ class Game extends React.Component {
         <div>
           <div className="stock">
             <div onClick={this.updateDeck.bind(this)}>
-              {this.deck.getAllCards()}
+              {this.stock.getLatestCard()}
             </div>
             <div>{this.waste.getLatestCard()}</div>
-            <div draggable="true">{this.foundation.getLatestCard()}</div>
-            <div draggable="true">{this.foundation.getLatestCard()}</div>
-            <div draggable="true">{this.foundation.getLatestCard()}</div>
-            <div draggable="true">{this.foundation.getLatestCard()}</div>
+            {this.app.foundations.map(foundation => {
+              return <div>{foundation.getLatestCard()} </div>;
+            })}
           </div>
         </div>
         <div className="deck">
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
-          <div draggable="true">{this.foundation.getLatestCard()}</div>
+          {this.app.tableaus.map(tableau => {
+            return <div>{tableau.getLatestCard()} </div>;
+          })}
         </div>
       </div>
     );

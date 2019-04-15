@@ -1,6 +1,6 @@
 import React from "react";
 
-class Deck {
+class Stock {
   constructor() {
     this.cards = [];
   }
@@ -12,10 +12,10 @@ class Deck {
   getLatestCard() {
     return (
       <div>
-        <div className="card"> {this.cards[0].unicode} </div>
+        <div className="card" draggable="true"> {this.cards[0].unicode} </div>
       </div>
     );
   }
 }
 
-export default Deck;
+export default Stock;

@@ -4,14 +4,16 @@ class Foundation{
   constructor(){
     this.cards = [];
   }
-  addCard(card){
+  addCard (card){
     this.cards.unshift(card);
   }
 
   getLatestCard(){
-    return (<div>
-      <div className="card"> {this.cards[0].unicode} </div>
-    </div>)
+    return (
+    <div>
+      <div className="card" > {this.cards[0].unicode} </div>
+    </div>
+    )
   }
 }
 export default Foundation;
