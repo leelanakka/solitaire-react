@@ -44,24 +44,26 @@ class Game {
   }
 
   addCardToReservedPile(id, des) {
+    console.log("did it come to add card to reservedPile pile......");
     des = des.split("_");
     if (des.includes("showCard")) {
       return this.addCardToReservedPileFromWaste(id);
     }
     if (des.includes("tableau")) {
-      return this.addCardToFoundationFromTableau(id, des[1], +des[2]);
+      return this.addCardToFoundationFromTableau(id, des[1], des[2]);
     }
   }
 
   addCardToStackPile(id, des) {
     des = des.split("_");
     if (des.includes("showCard")) {
+      console.log("did it come to add card to stack pile......");
       return this.addCardToStackPileFromWaste(id);
     }
     if (des.includes("foundation")) {
-      return this.addCardToStackPileFromFoundation(id, +des[1]);
+      return this.addCardToStackPileFromFoundation(id, des[1]);
     }
-    return this.addCardToTableauFromTableau(id, +des[1], +des[2]);
+    return this.addCardToTableauFromTableau(id, des[1], des[2]);
   }
 
   addCardToStackPileFromWaste(id) {

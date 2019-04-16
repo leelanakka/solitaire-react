@@ -16,7 +16,7 @@ class Pile {
   }
 
   getCard(id) {
-    return this.cards[this.cards.length - id];
+    return this.cards[this.cards.length - +id];
   }
 
   getCardValue(id) {
@@ -32,7 +32,7 @@ class Pile {
 
   getLastCardValue() {
     if (this.getLastCard()) {
-      return this.getLastCard().value;
+      return +this.getLastCard().value;
     }
     return 0;
   }
@@ -74,6 +74,12 @@ class Pile {
   }
 
   isAddableToReservedPile(value) {
+    console.log(
+      this.getLastCardValue(),
+      "this is last value of the card",
+      "value is",
+      +value-1
+    );
     return this.getLastCardValue() === +value - 1;
   }
 
