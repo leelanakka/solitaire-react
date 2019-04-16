@@ -133,6 +133,7 @@ class App extends React.Component {
           onDragStart={this.drag}
           onDrop={this.dropInFoundation.bind(this, index)}
           onDragOver={this.allowDrop}
+          style={this.getColor(card)}
         >
           {card.getUnicode()}
         </div>

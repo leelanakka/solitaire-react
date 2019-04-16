@@ -70,11 +70,11 @@ class Pile {
 
   isAddableToStackPile(value) {
     if (this.getLastCardValue() === 0) return value === 13;
-    return this.getLastCardValue() === value + 1;
+    return +this.getLastCardValue() === +value + 1;
   }
 
   isAddableToReservedPile(value) {
-    return this.getLastCardValue() === value - 1;
+    return this.getLastCardValue() === +value - 1;
   }
 
   isAlternateColor(color) {
