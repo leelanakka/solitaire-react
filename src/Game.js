@@ -63,20 +63,20 @@ class Game {
     des = des.split("_");
     if (des.includes("showCard"))
       return this.addCardToReservedPileFromWaste(id);
-    if (des.includes("stackPile"))
+    if (des.includes("tableau"))
       return this.addCardToFoundationFromTableau(id, des[1], +des[2]);
   }
 
   addCardToStackPile(id, des) {
     des = des.split("_");
     if (des.includes("showCard")) return this.addCardToStackPileFromWaste(id);
-    if (des.includes("reserved"))
+    if (des.includes("foundation"))
       return this.addCardToStackPileFromFoundation(id, des[1]);
     return this.addCardToTableauFromTableau(id, des[1], +des[2]);
   }
 
   addCardToStackPileFromWaste(id) {
-    const pile = this.stackPiles[id];
+    const pile = this.tableaus[id];
     const srcPile = this.showCardPile;
     const isAddable = pile.isAddableToStackPile(srcPile.getLastCardValue());
     const isAlternateColor = pile.isAlternateColor(srcPile.getLastCardColor());
@@ -85,7 +85,7 @@ class Game {
   }
 
   addCardToReservedPileFromWaste(id) {
-    const pile = this.reservedPiles[id];
+    const pile = this.foundations[id];
     const srcPile = this.showCardPile;
     const isAddable = pile.isAddableToReservedPile(srcPile.getLastCardValue());
     const isSameSuit = pile.isSameSuit(srcPile.getLastCardSuit());
@@ -94,8 +94,8 @@ class Game {
   }
 
   addCardToStackPileFromFoundation(id, des) {
-    const pile = this.stackPiles[id];
-    const srcPile = this.reservedPiles[des];
+    const pile = this.tableaus[id];
+    const srcPile = this.foundations[des];
     const isAddable = pile.isAddableToStackPile(srcPile.getLastCardValue());
     const isAlternateColor = pile.isAlternateColor(srcPile.getLastCardColor());
     if (isAddable && isAlternateColor) pile.addCard(srcPile.drawCard());
@@ -104,8 +104,8 @@ class Game {
 
   addCardToFoundationFromTableau(id, des, noOfCards) {
     if (noOfCards > 1) return false;
-    const pile = this.reservedPiles[id];
-    const srcPile = this.stackPiles[des];
+    const pile = this.foundations[id];
+    const srcPile = this.tableaus[des];
     const isAddable = pile.isAddableToReservedPile(srcPile.getLastCardValue());
     const isSameSuit = pile.isSameSuit(srcPile.getLastCardSuit());
     if (isAddable && isSameSuit) pile.addCard(srcPile.drawCard());
@@ -113,8 +113,8 @@ class Game {
   }
 
   addCardToTableauFromTableau(id, des, noOfCards) {
-    const pile = this.stackPiles[id];
-    const srcPile = this.stackPiles[des];
+    const pile = this.tableaus[id];
+    const srcPile = this.tableaus[des];
     const isAddable = pile.isAddableToStackPile(
       srcPile.getCardValue(noOfCards)
     );
@@ -124,6 +124,31 @@ class Game {
     if (isAddable && isAlternateColor)
       pile.addCards(srcPile.drawCards(noOfCards));
     return isAddable && isAlternateColor;
+  }
+
+  isDraggable(pile) {
+    return pile.isDraggable();
+  }
+
+  moveToPossiblePile(src, noOfCards) {
+    if (src === "showCard") {
+      let result = this.foundations.some((x, id) =>
+        this.addCardToReservedPileFromWaste(id)
+      );
+      result =
+        result ||
+        this.stackPiles.some((x, id) => this.addCardToStackPileFromWaste(id));
+      return result;
+    }
+    let result = this.foundations.some((x, id) =>
+      this.addCardToFoundationFromTableau(id, src, noOfCards)
+    );
+    result =
+      result ||
+      this.stackPiles.some((x, id) =>
+        this.addCardToTableauFromTableau(id, src, noOfCards)
+      );
+    return result;
   }
 }
 

@@ -47,7 +47,6 @@ class App extends React.Component {
 
   setFoundations(game) {
     for (let index = 0; index < 4; index++) {
-      console.log(game);
       game.addFoundation(new Pile());
     }
   }
@@ -80,30 +79,25 @@ class App extends React.Component {
 
   showAllTableauCards(pile, index) {
     const totalCards = pile.cards.length;
-    if (totalCards === 0)
-      return <div className="stackCard">{emptyCard.getUnicode()}</div>;
+    if (totalCards === 0) return <div>{emptyCard.getUnicode()}</div>;
     return pile.cards.map((card, i) => {
       if (i + 1 === totalCards) {
         card.revealCard();
       }
       if (card.isBlocked())
         return (
-          <div
-            className="stackCard"
-            style={this.getColor(card)}
-            draggable="false"
-          >
+          <div style={this.getColor(card)} draggable="false">
             {card.getUnicode()}
           </div>
         );
       return (
         <div
           className="card"
-          id={"card_" + i + "tableau_" + index}
+          id={"tableau_" + index + "_" + (totalCards - i)}
           draggable="true"
           onDragStart={this.drag}
+          style={this.getColor(card)}
         >
-          {" "}
           {card.getUnicode()}
         </div>
       );
