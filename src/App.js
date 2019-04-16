@@ -53,12 +53,12 @@ class App extends React.Component {
   }
 
   updateDeck() {
-    const shuffledCards = lodash.shuffle(Cards);
     this.setState(state => {
-      state.waste.addCard(shuffledCards[0]);
-      return { state };
+      const { game } = state;
+      game.changeCard();
+      return { game };
     });
-  }
+    }
 
   allowDrop(event) {
     event.preventDefault();
@@ -86,31 +86,59 @@ class App extends React.Component {
     });
   }
 
-  getAllTableauCards() {
-    return this.app.tableaus.map((tableau, index) => {
+  showAllTableauCards(pile, index) {
+    const totalCards = pile.cards.length;
+    if (totalCards === 0)
+      return <div className="stackCard">{emptyCard.getUnicode()}</div>;
+    return pile.cards.map((card, i) => {
+      if (i + 1 === totalCards) {
+        card.revealCard();
+      }
+      if (card.isBlocked())
+        return (
+          <div
+            className="stackCard"
+            style={this.getColor(card)}
+            draggable="false"
+          >
+            {card.getUnicode()}
+          </div>
+        );
       return (
-        <div className="card" id={"tableau_" + index}>
-          {tableau.getAllCards().map((card, i) => {
-            return (
-              <div
-                id={"card_" + i + "tableau_" + index}
-                className="card"
-                draggable="true"
-                onDragStart={this.drag}
-                onDrop={this.dropInTableau.bind(this, index)}
-                onDragOver={this.allowDrop}
-              >
-                {card.unicode}
-              </div>
-            );
-          })}
+        <div
+          className="card"
+          id={"card_" + i + "tableau_" + index}
+          draggable="true"
+          onDragStart={this.drag}
+        >
+          {" "}
+          {card.getUnicode()}
+        </div>
+      );
+    });
+  }
+
+  getAllTableauCards() {
+    const piles = this.state.game.tableaus;
+    return piles.map((tableau, index) => {
+      return (
+        <div
+          className="card"
+          id={"tableau_" + index}
+          onDrop={this.dropInTableau.bind(this, index)}
+          onDragOver={this.allowDrop}
+        >
+          {this.showAllTableauCards(tableau, index)}
         </div>
       );
     });
   }
 
   getAllFoundationCards() {
-    return this.app.foundations.map((foundation, index) => {
+    const piles = this.state.game.foundations;
+    return piles.map((foundation, index) => {
+      let card = foundation.getLastCard();
+      if (!card) card = emptyCard;
       return (
         <div
           id={"foundation_" + index}
@@ -120,7 +148,7 @@ class App extends React.Component {
           onDrop={this.dropInFoundation.bind(this, index)}
           onDragOver={this.allowDrop}
         >
-          {foundation.getLatestCard()}
+          {card.getUnicode()}
         </div>
       );
     });
