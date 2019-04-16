@@ -58,7 +58,7 @@ class App extends React.Component {
       game.changeCard();
       return { game };
     });
-    }
+  }
 
   allowDrop(event) {
     event.preventDefault();
@@ -72,17 +72,9 @@ class App extends React.Component {
     event.preventDefault();
     const src = event.dataTransfer.getData("id");
     this.setState(state => {
-      const { app } = state;
-      if (src === "wasteCard") {
-        this.updateDeck();
-      } else {
-        const tableauCardId = src.slice(-1);
-        console.log(tableauCardId);
-        app.removeCardFromTableau(tableauCardId);
-      }
-      const card = document.getElementById(src).innerHTML;
-      app.addCardToFoundation(destination, { unicode: card });
-      return { app };
+      const { game } = state;
+      game.addCardToReservedPile(destination, src);
+      return { game };
     });
   }
 
@@ -177,14 +169,10 @@ class App extends React.Component {
   dropInTableau(destination, event) {
     event.preventDefault();
     const src = event.dataTransfer.getData("id");
-    if (src === "wasteCard") {
-      this.updateDeck();
-    }
     this.setState(state => {
-      const { app } = state;
-      const card = document.getElementById(src).innerHTML;
-      app.addCardToTableau(destination, { unicode: card });
-      return { app };
+      const { game } = state;
+      game.addCardToStackPile(destination, src);
+      return { game };
     });
   }
 
@@ -194,7 +182,7 @@ class App extends React.Component {
         <div>
           <div className="stock">
             <div onClick={this.updateDeck.bind(this)} className="card">
-              {defaultCard.getUnicode}
+              {defaultCard.getUnicode()}
             </div>
             <div
               id="wasteCard"
