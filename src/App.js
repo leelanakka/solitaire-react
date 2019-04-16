@@ -1,9 +1,14 @@
 class App {
   constructor() {
+    this.deck = null;
     this.tableaus = [];
     this.foundations = [];
   }
 
+  addShuffledPile(pile) {
+    this.deck = pile;
+  }
+  
   addTableau(tableau) {
     this.tableaus.push(tableau);
   }

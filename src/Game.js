@@ -5,10 +5,12 @@ import Foundation from "./foundation";
 import Tableau from "./tableau";
 import Stock from "./stock";
 import App from "./App";
+import Pile from "./pile";
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
+
     this.app = new App();
     this.stock = new Stock();
     this.stock.addCard(Default);
@@ -16,13 +18,32 @@ class Game extends React.Component {
     this.waste.addCard(EmptyCard);
     this.setFoundations();
     this.setTableaus();
-    this.state = { waste: this.waste, app: this.app };
+    this.pile = new Pile();
+    this.state = { game: this.startGame() };
+  }
+
+  startGame() {
+    const game = new App();
+    game.addShuffledPile(this.initializePile());
+    this.setFoundations(game);
+    this.initializeStackPiles(game, 7);
+    game.setShowCardPile(new Pile());
+    return game;
+  }
+
+  initializePile() {
+    const pile = new Pile();
+    const shuffledCards = lodash.shuffle(Cards);
+    shuffledCards.forEach(card => {
+      pile.addCard(card);
+    });
+    return pile;
   }
 
   setTableaus() {
     const shuffledCards = lodash.shuffle(Cards);
     for (let index = 0; index <= 7; index++) {
-      let tableau = new Tableau();
+      let tableau = new Pile();
       for (let i = 0; i <= index; i++) {
         if (i == index) {
           tableau.addCard(shuffledCards[index + i]);
@@ -34,11 +55,12 @@ class Game extends React.Component {
     }
   }
 
-  setFoundations() {
+  setFoundations(game) {
     for (let index = 0; index < 4; index++) {
       let foundation = new Foundation();
       foundation.addCard(EmptyCard);
       this.app.addFoundation(foundation);
+    game.addFoundation(new Pile())
     }
   }
 
@@ -68,7 +90,7 @@ class Game extends React.Component {
         this.updateDeck();
       } else {
         const tableauCardId = src.slice(-1);
-        console.log(tableauCardId)
+        console.log(tableauCardId);
         app.removeCardFromTableau(tableauCardId);
       }
       const card = document.getElementById(src).innerHTML;
