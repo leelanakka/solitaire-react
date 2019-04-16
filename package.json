@@ -2,7 +2,7 @@
   "name": "solitaire-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://leelanakka.github.io/tic-tac-toe-react",
+  "homepage": "https://leelanakka.github.io/solitaire-react",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
