@@ -3,7 +3,6 @@ import { Cards, EmptyCard, Default } from "./cards_data/cards";
 import lodash from "lodash";
 import Foundation from "./foundation";
 import Tableau from "./tableau";
-import Deck from "./stock";
 import Stock from "./stock";
 import App from "./App";
 
@@ -13,17 +12,24 @@ class Game extends React.Component {
     this.app = new App();
     this.stock = new Stock();
     this.stock.addCard(Default);
-    this.waste = new Deck();
+    this.waste = new Stock();
     this.waste.addCard(EmptyCard);
-    this.state = { waste: this.waste };
     this.setFoundations();
     this.setTableaus();
+    this.state = { waste: this.waste, app: this.app };
   }
 
   setTableaus() {
-    for (let index = 0; index < 7; index++) {
+    const shuffledCards = lodash.shuffle(Cards);
+    for (let index = 0; index <= 7; index++) {
       let tableau = new Tableau();
-      tableau.addCard(Default);
+      for (let i = 0; i <= index; i++) {
+        if (i == index) {
+          tableau.addCard(shuffledCards[index + i]);
+          continue;
+        }
+        tableau.addCard(Default);
+      }
       this.app.addTableau(tableau);
     }
   }
@@ -44,25 +50,108 @@ class Game extends React.Component {
     });
   }
 
+  allowDrop(event) {
+    event.preventDefault();
+  }
+
+  drag(event) {
+    event.dataTransfer.setData("id", event.target.id);
+  }
+
+  dropInFoundation(destination, event) {
+    event.preventDefault();
+    const src = event.dataTransfer.getData("id");
+    console.log(src);
+    this.setState(state => {
+      const { app } = state;
+      if (src === "wasteCard") {
+        this.updateDeck();
+      } else {
+        const tableauCardId = src.slice(-1);
+        console.log(tableauCardId)
+        app.removeCardFromTableau(tableauCardId);
+      }
+      const card = document.getElementById(src).innerHTML;
+      app.addCardToFoundation(destination, { unicode: card });
+      return { app };
+    });
+  }
+
+  getAllTableauCards() {
+    return this.app.tableaus.map((tableau, index) => {
+      return (
+        <div className="card" id={"tableau_" + index}>
+          {tableau.getAllCards().map((card, i) => {
+            return (
+              <div
+                id={"card_" + i + "tableau_" + index}
+                className="card"
+                draggable="true"
+                onDragStart={this.drag}
+                onDrop={this.dropInTableau.bind(this, index)}
+                onDragOver={this.allowDrop}
+              >
+                {card.unicode}
+              </div>
+            );
+          })}
+        </div>
+      );
+    });
+  }
+
+  getAllFoundationCards() {
+    return this.app.foundations.map((foundation, index) => {
+      return (
+        <div
+          id={"foundation_" + index}
+          className="card"
+          draggable="true"
+          onDragStart={this.drag}
+          onDrop={this.dropInFoundation.bind(this, index)}
+          onDragOver={this.allowDrop}
+        >
+          {foundation.getLatestCard()}
+        </div>
+      );
+    });
+  }
+
+  dropInTableau(destination, event) {
+    event.preventDefault();
+    const src = event.dataTransfer.getData("id");
+    if (src === "wasteCard") {
+      this.updateDeck();
+    }
+    this.setState(state => {
+      const { app } = state;
+      const card = document.getElementById(src).innerHTML;
+      app.addCardToTableau(destination, { unicode: card });
+      return { app };
+    });
+  }
+
   allCards() {
     return (
       <div>
         <div>
           <div className="stock">
-            <div onClick={this.updateDeck.bind(this)}>
+            <div onClick={this.updateDeck.bind(this)} className="card">
               {this.stock.getLatestCard()}
             </div>
-            <div>{this.waste.getLatestCard()}</div>
-            {this.app.foundations.map(foundation => {
-              return <div>{foundation.getLatestCard()} </div>;
-            })}
+            <div
+              id="wasteCard"
+              onDragStart={this.drag}
+              onDragOver={this.allowDrop}
+              draggable="true"
+              className="card"
+            >
+              {this.waste.getLatestCard()}
+            </div>
+            {this.getAllFoundationCards()}
           </div>
         </div>
-        <div className="deck">
-          {this.app.tableaus.map(tableau => {
-            return <div>{tableau.getLatestCard()} </div>;
-          })}
-        </div>
+        <div className="deck">{this.getAllTableauCards()}</div>
       </div>
     );
   }

@@ -1,5 +1,3 @@
-import React from "react";
-
 class Stock {
   constructor() {
     this.cards = [];
@@ -10,11 +8,7 @@ class Stock {
   }
 
   getLatestCard() {
-    return (
-      <div>
-        <div className="card" draggable="true"> {this.cards[0].unicode} </div>
-      </div>
-    );
+    return this.cards[0].unicode;
   }
 }
 
