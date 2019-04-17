@@ -80,7 +80,7 @@ class Game {
   addCardToReservedPileFromWaste(id) {
     const pile = this.foundations[id];
     const srcPile = this.showCardPile;
-    const isAddable = pile.isAddableToReservedPile(srcPile.getLastCardValue());
+    const isAddable = pile.isAddableToReservedPile(+srcPile.getLastCardValue());
     const isSameSuit = pile.isSameSuit(srcPile.getLastCardSuit());
     if (isAddable && isSameSuit) pile.addCard(srcPile.drawCard());
     return isAddable && isSameSuit;
@@ -99,7 +99,7 @@ class Game {
     if (noOfCards > 1) return false;
     const pile = this.foundations[id];
     const srcPile = this.tableaus[des];
-    const isAddable = pile.isAddableToReservedPile(srcPile.getLastCardValue());
+    const isAddable = pile.isAddableToReservedPile(+srcPile.getLastCardValue());
     const isSameSuit = pile.isSameSuit(srcPile.getLastCardSuit());
     if (isAddable && isSameSuit) pile.addCard(srcPile.drawCard());
     return isAddable && isSameSuit;
