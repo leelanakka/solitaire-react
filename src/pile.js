@@ -74,12 +74,6 @@ class Pile {
   }
 
   isAddableToReservedPile(value) {
-    console.log(
-      this.getLastCardValue(),
-      "this is last value of the card",
-      "value is",
-      +value-1
-    );
     return this.getLastCardValue() === +value - 1;
   }
 

@@ -44,7 +44,6 @@ class Game {
   }
 
   addCardToReservedPile(id, des) {
-    console.log("did it come to add card to reservedPile pile......");
     des = des.split("_");
     if (des.includes("showCard")) {
       return this.addCardToReservedPileFromWaste(id);
@@ -57,7 +56,6 @@ class Game {
   addCardToStackPile(id, des) {
     des = des.split("_");
     if (des.includes("showCard")) {
-      console.log("did it come to add card to stack pile......");
       return this.addCardToStackPileFromWaste(id);
     }
     if (des.includes("foundation")) {

@@ -1,7 +1,7 @@
 const Cards = [
   {
     suit: "spade",
-    valu: 1,
+    value: 1,
     color: "black",
     unicode: "\u{1F0A1}"
   },
