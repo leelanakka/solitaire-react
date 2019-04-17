@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "aa3e803ed454475422c0",
-    "url": "/solitaire-react/static/css/main.c517cc1e.chunk.css"
+    "revision": "52680a9949b2245287d3",
+    "url": "/solitaire-react/static/css/main.f929824d.chunk.css"
   },
   {
-    "revision": "aa3e803ed454475422c0",
+    "revision": "52680a9949b2245287d3",
     "url": "/solitaire-react/static/js/main.a35e70b8.chunk.js"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/solitaire-react/static/js/2.761727aa.chunk.js"
   },
   {
-    "revision": "5b7dcffd9c94d175993757dc0a878fce",
+    "revision": "b0f983975aa73c1d3f0d8b6e589e93da",
     "url": "/solitaire-react/index.html"
   }
 ];
