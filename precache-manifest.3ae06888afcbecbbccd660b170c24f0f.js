@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/solitaire-react/static/js/2.761727aa.chunk.js"
   },
   {
-    "revision": "11ea65845e8229c7fbfbe270d3f70ce8",
+    "revision": "338c45d5fc602dd77ae44fb379027c02",
     "url": "/solitaire-react/index.html"
   }
 ];
