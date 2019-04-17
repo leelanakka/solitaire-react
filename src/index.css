@@ -2,18 +2,56 @@
   display: flex;
 }
 
-.deck {
-  display: flex
+html{
+  background-color:steelblue
 }
 
-.card{
+.card {
   font-size: 150px;
 }
 
-.foundation{
-  display: flex
+.tableauCard {
+  width: 110px;
+  font-size: 150px;
+  height: 159px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: peachpuff;
+  position: relative;
+  border-radius: 10px;
+  margin-left: 10px;
+  border: 1px solid black;
+  margin-top: -120px;
 }
 
-.stock{
-  display: flex
+.foundationCard {
+  width: 106px;
+  font-size: 150px;
+  height: 165px;
+  display: flex;
+  align-items: flex-end;
+  margin: 10px;
+  background-color: peachpuff;
+  border-radius: 10px;
+
+}
+
+.foundtionDeck {
+  margin-left: 100px;
+  display: flex;
+  
+}
+
+.deck {
+  display: flex;
+  margin-top: 150px;
+}
+
+.foundation {
+  display: flex;
+}
+
+.stock {
+  display: flex;
 }

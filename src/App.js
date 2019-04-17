@@ -79,20 +79,25 @@ class App extends React.Component {
 
   showAllTableauCards(pile, index) {
     const totalCards = pile.cards.length;
-    if (totalCards === 0) return <div>{emptyCard.getUnicode()}</div>;
+    if (totalCards === 0)
+      return <div className="tableauCard">{emptyCard.getUnicode()}</div>;
     return pile.cards.map((card, i) => {
       if (i + 1 === totalCards) {
         card.revealCard();
       }
       if (card.isBlocked())
         return (
-          <div style={this.getColor(card)} draggable="false">
+          <div
+            className="tableauCard"
+            style={this.getColor(card)}
+            draggable="false"
+          >
             {card.getUnicode()}
           </div>
         );
       return (
         <div
-          className="card"
+          className="tableauCard"
           id={"tableau_" + index + "_" + (totalCards - i)}
           draggable="true"
           onDragStart={this.drag}
@@ -128,7 +133,7 @@ class App extends React.Component {
       return (
         <div
           id={"foundation_" + index}
-          className="card"
+          className="foundationCard"
           draggable="true"
           onDragStart={this.drag}
           onDrop={this.dropInFoundation.bind(this, index)}
@@ -175,8 +180,8 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          <div className="stock">
-            <div onClick={this.updateDeck.bind(this)} className="card">
+          <div className="stock" >
+            <div  onClick={this.updateDeck.bind(this)} className="foundationCard">
               {defaultCard.getUnicode()}
             </div>
             <div
@@ -184,11 +189,11 @@ class App extends React.Component {
               onDragStart={this.drag}
               onDragOver={this.allowDrop}
               draggable="true"
-              className="card"
+              className="foundationCard"
             >
               {this.showTopCard()}
             </div>
-            {this.getAllFoundationCards()}
+            <div className="foundtionDeck">{this.getAllFoundationCards()}</div>
           </div>
         </div>
         <div className="deck">{this.getAllTableauCards()}</div>
