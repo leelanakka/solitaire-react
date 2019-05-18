@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   setTableaus(game) {
-    for (let index = 0; index <= 7; index++) {
+    for (let index = 0; index < 7; index++) {
       let tableau = new Pile();
       for (let i = 0; i <= index; i++) {
         tableau.addCard(game.drawCard());
@@ -64,6 +64,7 @@ class App extends React.Component {
   }
 
   drag(event) {
+    console.log("tableau in drag is ", this.state.game);
     event.dataTransfer.setData("id", event.target.id);
   }
 
@@ -180,8 +181,11 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          <div className="stock" >
-            <div  onClick={this.updateDeck.bind(this)} className="foundationCard">
+          <div className="stock">
+            <div
+              onClick={this.updateDeck.bind(this)}
+              className="foundationCard"
+            >
               {defaultCard.getUnicode()}
             </div>
             <div

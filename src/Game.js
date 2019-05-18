@@ -106,6 +106,18 @@ class Game {
   addCardToTableauFromTableau(id, des, noOfCards) {
     const pile = this.tableaus[id];
     const srcPile = this.tableaus[des];
+    console.log(
+      "id is ",
+      id,
+      " desc is ",
+      des,
+      "pile is ",
+      pile,
+      " src pile is ",
+      srcPile,
+      " no of cards are ",
+      noOfCards
+    );
     const isAddable = pile.isAddableToStackPile(
       srcPile.getCardValue(noOfCards)
     );
@@ -120,27 +132,6 @@ class Game {
 
   isDraggable(pile) {
     return pile.isDraggable();
-  }
-
-  moveToPossiblePile(src, noOfCards) {
-    if (src === "showCard") {
-      let result = this.foundations.some((x, id) =>
-        this.addCardToReservedPileFromWaste(id)
-      );
-      result =
-        result ||
-        this.stackPiles.some((x, id) => this.addCardToStackPileFromWaste(id));
-      return result;
-    }
-    let result = this.foundations.some((x, id) =>
-      this.addCardToFoundationFromTableau(id, src, noOfCards)
-    );
-    result =
-      result ||
-      this.stackPiles.some((x, id) =>
-        this.addCardToTableauFromTableau(id, src, noOfCards)
-      );
-    return result;
   }
 }
 
