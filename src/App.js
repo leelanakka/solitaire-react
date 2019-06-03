@@ -1,7 +1,7 @@
 import React from "react";
 import { Cards, EmptyCard, Default } from "./cards_data/cards";
 import lodash from "lodash";
-import Game from "./game";
+import Game from "./Game";
 import Pile from "./pile";
 import Card from "./Card";
 

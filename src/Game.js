@@ -106,18 +106,6 @@ class Game {
   addCardToTableauFromTableau(id, des, noOfCards) {
     const pile = this.tableaus[id];
     const srcPile = this.tableaus[des];
-    console.log(
-      "id is ",
-      id,
-      " desc is ",
-      des,
-      "pile is ",
-      pile,
-      " src pile is ",
-      srcPile,
-      " no of cards are ",
-      noOfCards
-    );
     const isAddable = pile.isAddableToStackPile(
       srcPile.getCardValue(noOfCards)
     );

@@ -11,10 +11,7 @@ COPY . /app
 RUN npm install
 
 # Make port 80 available to the world outside this container
-EXPOSE 8080
-
-# Define environment variable
-ENV NAME World
+EXPOSE 3000
 
 # Run app.js when the container launches
 CMD ["npm", "start"]
