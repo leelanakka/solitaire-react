@@ -64,7 +64,6 @@ class App extends React.Component {
   }
 
   drag(event) {
-    console.log("tableau in drag is ", this.state.game);
     event.dataTransfer.setData("id", event.target.id);
   }
 
@@ -170,6 +169,7 @@ class App extends React.Component {
   dropInTableau(destination, event) {
     event.preventDefault();
     const src = event.dataTransfer.getData("id");
+    console.log(src);
     this.setState(state => {
       const { game } = state;
       game.addCardToStackPile(destination, src);

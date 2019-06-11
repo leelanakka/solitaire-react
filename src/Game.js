@@ -55,12 +55,14 @@ class Game {
 
   addCardToStackPile(id, des) {
     des = des.split("_");
+    console.log(des);
     if (des.includes("showCard")) {
       return this.addCardToStackPileFromWaste(id);
     }
     if (des.includes("foundation")) {
       return this.addCardToStackPileFromFoundation(id, des[1]);
     }
+    console.log(this.tableaus[des[1]], "61");
     return this.addCardToTableauFromTableau(id, des[1], des[2]);
   }
 
