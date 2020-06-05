@@ -50,9 +50,12 @@ class Pile {
   }
 
   drawCards(noOfCards) {
+    console.log(noOfCards)
     let result = new Array(noOfCards).fill(1);
     result = result.map(x => this.drawCard());
+    console.log(result);
     result.reverse();
+    console.log(result)
     return result;
   }
 

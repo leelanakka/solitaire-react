@@ -63,7 +63,7 @@ class Game {
       return this.addCardToStackPileFromFoundation(id, des[1]);
     }
     console.log(this.tableaus[des[1]], "61");
-    return this.addCardToTableauFromTableau(id, des[1], des[2]);
+    return this.addCardToTableauFromTableau(id, des[1], +des[2]);
   }
 
   addCardToStackPileFromWaste(id) {
@@ -115,6 +115,8 @@ class Game {
       srcPile.getCardColor(noOfCards)
     );
     if (isAddable && isAlternateColor) {
+      console.log(noOfCards);
+
       pile.addCards(srcPile.drawCards(noOfCards));
     }
     return isAddable && isAlternateColor;
